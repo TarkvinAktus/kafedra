@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container">
+
+
+    {% for doc in studydoc_list %}
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                    <h1 class="display-4">>{{ doc.name }}</a></h1>
+                    <div class="date">
+                        <p class="lead">Курс: {{ doc.course}}</p>
+                        <p class="lead"><a href="{{ doc.document.url}}" download>Скачать файл</a>
+                    </div>
+                    {% if user.is_authenticated and user == doc.teacher.user %}
+                    <div>
+                        <a class="btn btn-primary" href="{% url 'docdet' pk=doc.pk %}" role="button">Подробнее</a>
+                    </div>
+                    {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

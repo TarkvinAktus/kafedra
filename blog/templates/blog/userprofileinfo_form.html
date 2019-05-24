@@ -1,0 +1,15 @@
+{% extends 'blog/base.html' %}
+{% load staticfiles %}
+    {% block content %}
+    <div class="jumbotron">
+
+        <h1>Обновление вашего профиля</h1>
+        <form class="container" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ userprofileinfo_form.as_p }}
+            <input type = "submit" value="Обновление"></imput>
+        </form>
+    </div>
+    {% endblock %}
+    

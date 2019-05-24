@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class='container col-md-9 col-lg-6 col-sm-3 centering'>
+        <div class="btn-group btn-group-lg " role="group" aria-label="...">
+                <a role="button" class="btn btn-light " href="{% url 'students' %}" >Карточками</a>
+                <a role="button" class="btn btn-light " href="{% url 't_students' %}" >Списком</a>
+                <a role="button" class="btn btn-light " href="{% url 'g_students' %}" >По группам</a>
+        </div>
+</div>
+<hr>
+<div class="container">
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action active">
+                Студенты 
+            </a>
+            {% for user in student_list %}
+            <a href="{% url 'user_detail' pk=user.pk %}" class="list-group-item list-group-item-action">{{ user.username}} - {{user.groups.all.0}}</a>
+            {% endfor %}
+        </div>
+    
+</div>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+
+<div class='container col-md-9 col-lg-6 col-sm-3 centering'>
+        <div class="btn-group btn-group-lg " role="group" aria-label="...">
+                <a role="button" class="btn btn-light " href="{% url 'students' %}" >Карточками</a>
+                <a role="button" class="btn btn-light " href="{% url 't_students' %}" >Списком</a>
+                <a role="button" class="btn btn-light " href="{% url 'g_students' %}" >По группам</a>
+        </div>
+</div>
+<hr>
+<div class="container">
+        {% regroup student_list by groups.all.0 as group_list %}
+        {% for students in group_list %}
+            <a class="list-group-item list-group-item-action active" data-toggle="collapse" href="#{{ students.grouper }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                {{ students.grouper }}
+            </a>
+            <div class="collapse list-group" id="{{ students.grouper }}">
+            {% for user in students.list %}
+            <a href="{% url 'user_detail' pk=user.userprofileinfo.pk %}" class="collapse list-group-item list-group-item-action" id="{{ students.grouper }}">
+                {{ user.username}}
+            </a>
+            {% endfor %}
+            </div>
+        {% endfor %}
+</div>
+
+{% endblock %}

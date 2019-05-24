@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% load extras %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+    {% for userinfo in users_list %}
+            <div class="card container">
+                <img  class="card-img-top" src='{{userinfo.profile_pic.url}}' alt='No Photo'>
+                <div class="card-body">
+                  <p class="card-text"><a href="{% url 'user_detail' pk=userinfo.pk %}">{{ userinfo.user }}</a></p>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:2 %}
+    </div>
+    <div class="row">
+    {% endif %}
+
+
+    {% endfor %}
+</div>
+{% endblock %}

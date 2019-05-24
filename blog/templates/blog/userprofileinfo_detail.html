@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% load extras %}
+{% block content %}
+  <div class="container">
+    <h3>{{ userinfo.user }}</h3>
+    <div class='row'>
+      <div class='col'>
+        <img class="card" src='{{userinfo.profile_pic.url}}' alt='No Photo'>
+        <p>{{ userinfo.portfolio_site }}</p>
+      </div>
+      <div class='col'>
+          <div class=" btn-group-vertical buttonGroup" role="group" aria-label="Button group with nested dropdown">
+              <a role="button" class="btn btn-light profileButton" href="{% url 'tCourses' pk=userinfo.user.pk %}">Курсы</a>
+              {% if user.is_authenticated and user == userinfo.user and userinfo.user|has_group:'teachers'%}
+              <a role="button" class="btn btn-light profileButton" href="{% url 'addCourse' %}" role="button">Добавить курс</a>
+              <a role="button" class="btn btn-light profileButton" href="{% url 'newdoc' pk=userinfo.user.pk %}" >Добавить документ</a>
+              
+              <a role="button" class="btn btn-light profileButton" href="{% url 'newdoccommon' pk=userinfo.user.pk %}" >Добавить общий документ</a>
+              <a role="button" class="btn btn-light profileButton" href="{% url 'diploma_list' pk=userinfo.user.pk %}" >Дипломники {{userinfo.teacherdiploma.count}} из {{userinfo.diploma_count}}</a>
+              {% endif %}
+          </div>    
+      </div>
+    </div>
+    
+    
+  </div>
+
+{% endblock %}

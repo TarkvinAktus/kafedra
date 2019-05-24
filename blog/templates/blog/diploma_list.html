@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% load extras %}
+{% block content %}
+<div class="container">
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active">
+            Студенты 
+        </a>
+        {% for diploma in diploma_list %}
+        <a href="#" class="list-group-item list-group-item-action">{{ diploma.student}} - {{diploma.theme}}</a>
+        {% endfor %}
+        <a href="{% url 'newdiploma' %}" class="list-group-item list-group-item-action">Добавить дипломника</a>
+    </div>
+
+</div>
+{% endblock %}
+

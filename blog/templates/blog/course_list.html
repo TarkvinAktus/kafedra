@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container">
+
+
+    {% for course in course_list %}
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                    <h1 class="display-4">{{ course.name }}</a></h1>
+                    <div class="date">
+                        <!--<p class="lead">Автор: {{ course.teacher.user}}</p>-->
+                        <p class="lead">URL: {{ course.url}}</p>
+                        <a class="btn btn-primary" href="{% url 'docs' user=course.teacher.user course=course.name %}" role="button">Учебные материалы</a>
+                        <a class="btn btn-primary" href="{% url 'labs' pk=course.pk %}" role="button">Лабораторные</a>
+                        <a class='btn btn-primary' href='{% url "lab_table" course=course.name %}'>Таблица лаб</a>
+                        {% if user == course.teacher.user%}
+                        <a class="btn btn-primary" href="{% url 'new_lab' pk=course.pk %}" role="button">Добавить лабораторную</a>
+                        {% endif %}
+                    </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

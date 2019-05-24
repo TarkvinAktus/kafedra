@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1 class='posttitle loader'>Лабораторная № {{ labinfo.lab_number }} - {{ labinfo.lab_name }}</h1>
+    <p>Ccылки: {{ labinfo.link1 }} {{ labinfo.link2 }}</p>
+    {% if user == labinfo.course.teacher.user %}
+    <div>
+        <a class="btn btn-danger" href="{% url 'labdel' pk=labinfo.pk course=labinfo.course.pk %}" role="button">Удалить</a>
+    </div>
+    {% endif %}
+        
+
+{% endblock %}

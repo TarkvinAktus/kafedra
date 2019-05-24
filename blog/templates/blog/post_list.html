@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="container">
+
+
+    {% for post in post_list %}
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                    <h1 class="display-4"><a class="my_a" href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h1>
+                    <div class="date">
+                        <p class="lead">Автор: {{ post.author}}</p>
+                        <p class="lead">Опубликовано: {{ post.published_date|date:"D M Y"}}</p>
+                    </div>
+                    <h3 class="lead">
+                            <a class="my_a" href="{% url 'post_detail' pk=post.pk %}">Комментарии: {{ post.comments.count }}</a>
+                    </h3>
+                    
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
