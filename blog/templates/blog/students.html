@@ -17,7 +17,7 @@
             <div class="card container">
                 <img  class="card-img-top" src='{{userinfo.profile_pic.url}}' alt='No Photo'>
                 <div class="card-body">
-                  <p class="card-text"><a href="{% url 'user_detail' pk=userinfo.pk %}">{{ userinfo.user }}</a></p>
+                        <h5 class="card-title"><a class="my_a my_a_2" href="{% url 'user_detail' pk=userinfo.pk %}">{{ userinfo.user }}</a></h5>
                 </div>
             </div>
             {% if forloop.counter|divisibleby:3 %}

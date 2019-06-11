@@ -3,10 +3,17 @@
 {% block content %}
     <h1>Новая запись</h1>
 
-    <form method="POST">
+    <form method="POST" class="post-form">
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="save btn btn-default">Сохранить</button>
+        <div class="form-group">
+            <label for="titleinput">Тема сообщения</label>
+            <input type="text" class="form-control" id="titleinput" name="title">
+        </div>
+        <div class="form-group">
+            <label for="textinput">Тема сообщения</label>
+            <textarea class="form-control" id="textinput" name="text" rows="3"></textarea>
+        </div>
+    <button type="submit" class="btn more_dark_blue">Сохранить</button>
     </form>
 
     <script>var editor = new MediumEditor('.editable');</script>

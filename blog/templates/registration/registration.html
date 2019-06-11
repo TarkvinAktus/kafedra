@@ -6,11 +6,46 @@
         <h1>Спасибо за регистрацию!</h1>
         {% else %}
         <h1>Заполните все поля</h1>
-        <form class="container" enctype="multipart/form-data" method="POST">
+        <form class="container" enctype="multipart/form-data" method="POST" action='{% url "register" %}'>
             {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type = "submit" value="Зарегистрироваться"></imput>
+            
+        
+
+        <div class="col-md-4 mb-3">
+            <label for="validationTooltip01">Логин</label>
+            <input name="username" type="text" class="form-control" id="validationTooltip01" placeholder="Иван_Иванович" required>
+            <div class="valid-tooltip">
+              All ok!
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationTooltip02">Email</label>
+            <input name="email" type="email" class="form-control" id="validationTooltip02" placeholder="somemail@gmail.com" required>
+            <div class="valid-tooltip">
+              Ready!
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationTooltip03">Пароль</label>
+            <input name="password" type="password" class="form-control" id="validationTooltip03" placeholder="мой_сложный_пароль" required>
+            <div class="valid-tooltip">
+              Awesome!
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="validationTooltip04">Веб сайт</label>
+            <input name="portfolio_site" type="text" class="form-control" id="validationTooltip04" placeholder="www.mysite.com" >
+            <div class="valid-tooltip">
+              Looks good!
+            </div>
+        </div>
+        <div class="col-md-4 mb-3" style="margin-left:0.9em;">
+            <label class="custom-file-label" for="validatedCustomFile">Фото профиля</label>
+            <input type="file" name='profile_pic' class="custom-file-input" id="validatedCustomFile" value="Выбрать">
+          </div>
+        <div class="col-md-4 mb-3">
+            <button type="submit" class="btn more_dark_blue">Зарегистрироваться</button>
+        </div>
         </form>
 
        {% endif %}

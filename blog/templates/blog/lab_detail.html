@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+{% load extras %}
+
+{% block content %}
+    <h1 class='posttitle loader'>Лабораторная № {{ lab.lab.lab_number }} - {{ lab.lab.lab_name }}</h1>
+    <p>{{ lab.student }}</p>
+    <div>
+        {% if lab.approved %}
+        <a class="btn btn-success" href="{% url 'update_lab' pk=lab.pk %}" role="button">Принято</a>
+        {% else %}
+        {% if user|has_group:'teachers'%}
+        <a class="btn btn more_dark_blue" href="{% url 'update_lab' pk=lab.pk %}" role="button">Принять</a>
+        {% endif %}
+        {% endif %}
+        
+    </div>
+        
+
+{% endblock %}

@@ -20,6 +20,8 @@ urlpatterns = [
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
 
+    
+
     path('addCourse/', views.AddCourseView.as_view(), name='addCourse'),
     path('tCourses/user/<int:pk>', views.TeacherCourseListView.as_view(), name='tCourses'),
     
@@ -38,14 +40,20 @@ urlpatterns = [
 
     path('newdiploma',views.DiplomaCreateView.as_view(), name='newdiploma'),
     path('diploma_list/teacher/<int:pk>',views.DiplomaList.as_view(), name='diploma_list'),
-    
+
+
     re_path(r'lab_table/(?P<course>[\w\-]+)',views.LabAllStudentsList.as_view(), name='lab_table'),
+    path('lab_detail/<int:pk>',views.LabDetailView.as_view(), name='lab_detail'),
+    path('lab_update/<int:pk>',views.approve_lab, name='update_lab'),
+    re_path(r'lab_journal_new/(?P<course>[\w\-]+)',views.LabCreateView.as_view(), name='new_lab_journal'),
+        
 
     path('users/>', views.UsersList.as_view(), name='users'),
     path('students/>', views.StudentsList.as_view(), name='students'),
     path('g_students/>', views.GroupsStudentsList.as_view(), name='g_students'),
     path('t_students/>', views.TableStudentsList.as_view(), name='t_students'),
     path('user/<int:pk>', views.UserProfileInfoDetail.as_view(), name='user_detail'),
+    
 ]
 
 

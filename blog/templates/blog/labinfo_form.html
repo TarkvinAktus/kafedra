@@ -3,10 +3,30 @@
 {% block content %}
     <h1>Новая лабораторная</h1>
 
+
     <form method="POST" class="post-form">
     {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="save btn btn-default">Сохранить</button>
-    </form>
-
+        <div class="input-group mb-3">
+            <select  name="course" class="custom-select">
+                {% for option in form.course %}
+                <option value="{{option.name}}">{{option}}</option>
+                {% endfor %}
+            </select>
+            <div>
+                <input type="text" name="lab_name" class="form-control" placeholder="Имя лабораторной">
+            </div>
+            <div>
+                <input type="text" name="lab_number" class="form-control" placeholder="Номер лабораторной">
+            </div>  
+        </div>
+        <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="">Ссылки на материалы</span>
+                </div>
+                <input type="text" class="form-control" name="link1">
+                <input type="text" class="form-control" name="link2">
+        </div>
+        <button style="margin-top:1em;"type="submit" class="btn more_dark_blue float-right">Сохранить</button>
+    </form>    
+      
 {% endblock %}

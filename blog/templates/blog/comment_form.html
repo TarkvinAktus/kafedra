@@ -3,9 +3,11 @@
 {% block content %}
     <h1 class="display-4">Новый комментарий</h1>
     <form method="POST" class="post-form">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="save btn btn-default">Добавить комментарий</button>
+        {% csrf_token %}
+            <div class="form-group">
+                <textarea class="form-control" id="textinput" name="text" rows="3"></textarea>
+            </div>
+        <button type="submit" class="btn more_dark_blue">Добавить комментраий</button>
     </form>
 
     <script>var editor = new MediumEditor('.editable');</script>

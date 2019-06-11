@@ -10,12 +10,12 @@
                     <h1 class="display-4">{{ course.name }}</a></h1>
                     <div class="date">
                         <!--<p class="lead">Автор: {{ course.teacher.user}}</p>-->
-                        <p class="lead">URL: {{ course.url}}</p>
-                        <a class="btn btn-primary" href="{% url 'docs' user=course.teacher.user course=course.name %}" role="button">Учебные материалы</a>
-                        <a class="btn btn-primary" href="{% url 'labs' pk=course.pk %}" role="button">Лабораторные</a>
-                        <a class='btn btn-primary' href='{% url "lab_table" course=course.name %}'>Таблица лаб</a>
+                        <!--<p class="lead">URL: {{ course.url}}</p>-->
+                        <a class="btn more_dark_blue" href="{% url 'docs' user=course.teacher.user course=course.name %}" role="button">Учебные материалы</a>
+                        <a class="btn more_dark_blue" href="{% url 'labs' pk=course.pk %}" role="button">Лабораторные</a>
+                        <a class='btn more_dark_blue' href='{% url "lab_table" course=course.name %}'>Журнал лаб. работ</a>
                         {% if user == course.teacher.user%}
-                        <a class="btn btn-primary" href="{% url 'new_lab' pk=course.pk %}" role="button">Добавить лабораторную</a>
+                        <a class="btn more_dark_blue" href="{% url 'new_lab' pk=course.pk %}" role="button">Добавить лаб. работу</a>
                         {% endif %}
                     </div>
             </div>

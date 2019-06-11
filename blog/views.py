@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from blog.models import (User, Post, Comment, UserProfileInfo, 
-                        Course, StudyDoc, Diploma, LabInfo)
+                        Course, StudyDoc, Diploma, LabInfo, Lab)
 from django.utils import timezone
 from django.db.models import Q
 from blog.forms import (PostForm, CommentForm, 
@@ -136,9 +136,14 @@ class CreateStudyDocView(LoginRequiredMixin, generic.CreateView):
     fields = ('name', 'document' ,'course')
     success_url = reverse_lazy('users')
 
+    
+
+
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.teacher = self.request.user.userprofileinfo
+        print("Course - ")
+        print(self.object.course)
         return super().form_valid(form)
 
 
@@ -206,8 +211,8 @@ class DiplomaCreateView(LoginRequiredMixin, generic.CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        teacher = self.object.teacher 
-        return reverse_lazy( 'diploma_list', kwargs={'teacher': teacher})
+        teacher = self.object.teacher.id 
+        return reverse_lazy( 'diploma_list', kwargs={'pk': teacher})
 
 
 class DiplomaList(LoginRequiredMixin,ListView):
@@ -256,6 +261,32 @@ class LabInfoDeleteView(LoginRequiredMixin,DeleteView):
     def get_success_url(self,*args, **kwargs):
         course = self.kwargs['course']
         return reverse_lazy( 'labs', kwargs={'pk': course})
+
+
+#Lab journal
+
+class LabCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Lab
+    fields = ('student','lab')
+
+    def get_queryset(self, *args, **kwargs):
+        course = self.kwargs['course']
+        return reverse_lazy( 'lab_table', kwargs={'course': course})
+
+class LabDetailView(DetailView):
+    model = Lab
+
+class LabUpdateView(LoginRequiredMixin,UpdateView):
+    model = UserProfileInfo
+    fields = ('approved')
+    template_name = 'lab_approve.html'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.approve_date = timezone.now()
+
+        return super().form_valid(form)
+
     
 class CreatePostView(LoginRequiredMixin, generic.CreateView):
     model = Post
@@ -303,6 +334,13 @@ class PostDeleteView(LoginRequiredMixin,DeleteView):
 #######################################
 
 @login_required
+def approve_lab(request, pk):
+    lab = get_object_or_404(Lab, pk=pk)
+    lab.approve()
+    course = lab.lab.course
+    return redirect('lab_table', course=course)
+
+@login_required
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     post.publish()
@@ -338,38 +376,6 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('post_detail', pk=post_pk)
 
-
-def edit(request, pk):
-    
-    registered = False
-
-    if request.method == "POST":
-        user_form = UserForm(data=request.POST)
-        profile_form = UserProfileInfoForm(data=request.POST)
-
-        if user_form.is_valid() and profile_form.is_valid():
-            myUser = get_object_or_404(User, pk=pk)
-            myUser = user_form.save()
-            myUser.set_password(user.password)
-            myUser.save()
-
-            myProfile = get_object_or_404(UserProfileInfo, pk=pk)
-            myProfile = profile_form.save(commit=False)
-            myProfile.user = user
-            myProfile.profile_pic = 'MEDIA_URL/profile_pics/default.png'
-            if 'profile_pic' in request.FILES:
-                myProfile.profile_pic = request.FILES['profile_pic']
-            myProfile.save()
-        else:
-            print(user_form.errors,profile_form.errors)
-    else:
-        user_form = UserForm()
-        profile_form = UserProfileInfoForm()
-
-    return render(request,'registration/registration.html',
-        {'user_form': user_form,
-        'profile_form': profile_form
-        })
 
 def register(request):
     

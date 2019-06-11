@@ -3,10 +3,28 @@
 {% block content %}
     <h1>Новый документ</h1>
 
+    
     <form method="POST" class="post-form" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+        {% csrf_token %}
+        <div style="margin:1em;">
+            <input type="file" name="document">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <input type="text" name="name" class="form-control" placeholder="Имя документа">
+            </div>
+            <select  name="course" class="custom-select">
+                      {% for option in form.course %}
+                    <option value="{{option.name}}">{{option}}</option>
+                      {% endfor %}
+                  </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn more_dark_blue">Сохранить</button>
+            </div>
+          </div>
+     
+    
+       
+        </form>
 
 {% endblock %}

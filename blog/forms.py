@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Post, Comment,UserProfileInfo, Course, StudyDoc, Diploma, LabInfo
+from .models import Post, Comment,UserProfileInfo, Course, StudyDoc, Diploma, LabInfo, Lab
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -9,11 +9,22 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username','email', 'password')
 
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email':forms.EmailInput(attrs={'multiple': False,'class': 'form-control'}),
+            'password':forms.PasswordInput(attrs={'multiple': False,'class': 'form-control'}),
+        }
+
 class UserProfileInfoForm(forms.ModelForm):
 
     class Meta():
         model = UserProfileInfo
         fields = ('portfolio_site','profile_pic')
+
+        widgets = {
+            'portfolio_site': forms.TextInput(attrs={'class': 'form-control'}),
+            'profile_pic':forms.FileInput(attrs={'multiple': False,'class': 'custom-file-input'}),
+        }
 
 
 class PostForm(forms.ModelForm):
@@ -24,7 +35,7 @@ class PostForm(forms.ModelForm):
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'textinputclass'}),
-            'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea postcontent'}),
+            'text': forms.Textarea(attrs={'class': 'editable medium-editor-textarea'}),
         }
     
 
@@ -69,9 +80,9 @@ class DiplomaForm(forms.ModelForm):
         fields = ('theme', 'student' ,'teacher')
 
         widgets = {
-            'theme': forms.TextInput(attrs={'class': 'textinputclass'}),
-            'student': forms.TextInput(attrs={'class': 'textinputclass'}),
-            'teacher': forms.TextInput(attrs={'class': 'textinputclass'}),
+            'theme': forms.TextInput(attrs={'type':'text','class': 'form-control','id':'theme'}),
+            'student': forms.TextInput(attrs={'class': 'form-control','id':'student'}),
+            'teacher': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -79,3 +90,9 @@ class LabInfo(forms.ModelForm):
     class Meta:
         model = LabInfo
         fields = '__all__'
+
+class LabForm(forms.ModelForm):
+    class Meta:
+        model = Lab
+        fields = ('student','lab')
+

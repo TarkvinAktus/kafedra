@@ -1,34 +1,41 @@
 {% extends 'blog/base.html' %}
+{% load extras %}
 {% block content %}
 
 <hr>
 <div class="container">
         {% regroup list.0 by groups.all.0 as group_list %}
         {% for students in group_list %}
-            <a class="list-group-item list-group-item-action active" data-toggle="collapse" href="#{{ students.grouper }}" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="list-group-item list-group-item-action more_dark_blue a_list" data-toggle="collapse" href="#{{ students.grouper }}" role="button" aria-expanded="false" aria-controls="collapseExample">
                 {{ students.grouper }}
             </a>
             <div class="collapse list-group" id="{{ students.grouper }}">
             {% for user in students.list %}
+            
             <a href="{% url 'user_detail' pk=user.userprofileinfo.pk %}" class="collapse list-group-item list-group-item-action" id="{{ students.grouper }}">
                 {{ user.username}}
-                <hr>
+            </a>
                     {% for lab in user.userprofileinfo.labinfo.all %}
                         {% if lab.lab.course|stringformat:"s" == list.1|stringformat:"s" %} 
+                            <a href="{% url 'lab_detail' pk=lab.pk %}" class="collapse list-group-item list-group-item-action" id="{{ students.grouper }}">
                             {{ lab.lab }} -
                             {% if lab.approved %}
                             Принята
                             {% else %}
                             Не принята
                             {% endif %} 
-                            <hr>
+                            </a>
                         {% endif %}    
                     {% endfor %}
-                
-            </a>
+          
+            
             {% endfor %}
             </div>
         {% endfor %}
 </div>
-
+{% if user|has_group:'teachers'%}
+<div class="container" style="margin-top:1em">
+        <a class="btn more_dark_blue float-right" href="{% url 'new_lab_journal' course='list.1' %}" role="button">Сделать новую запись</a>
+</div>
+{% endif %}
 {% endblock %}

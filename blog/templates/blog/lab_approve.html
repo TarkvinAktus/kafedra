@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h1>Подтвердить выполнение лабораторной?</h1>
+
+    <form method="POST">
+    {% csrf_token %}
+    
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Выполнено</span>
+        </div>
+        <select name="approved" class="custom-select">
+          <option value="True">Да</option>
+          <option value="False">Нет</option>
+        </select>
+        <div class="input-group-append">
+            <button type="submit" class="btn more_dark_blue">Подтвердить</button>
+        </div>
+      </div>
+ 
+   
+    </form>
+
+{% endblock %}

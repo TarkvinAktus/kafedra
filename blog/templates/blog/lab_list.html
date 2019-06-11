@@ -14,7 +14,7 @@
             <div class="card-body">
               <h5 class="card-title">{{lab.lab_number}}</h5>
               <p class="card-text">{{lab.lab_name}}</p>
-              <a href="{% url 'labdet' pk=lab.pk %}" class="btn btn-primary">Подробнее</a>
+              <a href="{% url 'labdet' pk=lab.pk %}" class="btn more_dark_blue">Подробнее</a>
             </div>
         </div>
         {% if forloop.counter|divisibleby:3 %}

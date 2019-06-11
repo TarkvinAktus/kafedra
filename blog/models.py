@@ -113,6 +113,13 @@ class Lab(models.Model):
     approve_date = models.DateTimeField(blank=True, null=True)
     real_approve_date = models.DateTimeField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse("lab_detail",kwargs={'pk':self.pk})
+
+    def approve(self):
+        self.approve_date = timezone.now()
+        self.approved = True
+        self.save()
 
 class LabInfo(models.Model):
     course = models.ForeignKey('blog.Course', related_name='lablist',null=True,on_delete=models.CASCADE)
