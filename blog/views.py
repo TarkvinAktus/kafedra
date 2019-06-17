@@ -91,18 +91,13 @@ class LabAllStudentsList(ListView):
         context = [student_list,course]
         print(context)
         return context
-    '''
-    def get_queryset(self):
-        #course = self.kwargs['course']
-        return User.objects.filter(~Q(groups__name='teachers')).prefetch_related('groups',)
-'''
+
 class TeacherCourseListView(ListView):
     model = Course
     template_name = 'course_list.html'
 
     def get_queryset(self, *args, **kwargs):
         pk = self.kwargs['pk']
-        #print(user)
         return Course.objects.filter(teacher__user__pk=pk)
 
 
